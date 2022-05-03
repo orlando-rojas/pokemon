@@ -18,7 +18,6 @@ export function PokemonModal({ isOpen, handleClose, pokemonData }) {
   useEffect(() => {
     if (pokemonData) {
       const getPokemonData = async () => {
-        console.log({ pokemonData });
         const response = await axios.get(pokemonData.pokemon.url);
         setPokemonInfo(response.data);
       };

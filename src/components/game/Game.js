@@ -22,8 +22,6 @@ export function Game() {
     [myPokemonsObj]
   );
 
-  console.log({ waterPokemons });
-
   const getStyles = () => {
     const board = document.getElementById('board');
     const style = window.getComputedStyle(board);
@@ -97,6 +95,7 @@ export function Game() {
 
   useEffect(() => {
     if (found) {
+      const waterPokemons = myPokemonsObj['water'] ?? [];
       const icePokemons = myPokemonsObj['ice'] ?? [];
       const firePokemons = myPokemonsObj['fire'] ?? [];
       const electricPokemons = myPokemonsObj['electric'] ?? [];
@@ -107,16 +106,25 @@ export function Game() {
         (electricPkmn) => electricPkmn.name
       );
 
+      const getRandomPokemon = () => {
+        const randomIndex = Math.floor(
+          Math.random() * pokemonsInLocation.length
+        );
+        const foundPkmn = pokemonsInLocation[randomIndex];
+        setFoundPokemon(foundPkmn);
+      };
+
       const cartPokemonsNames = cartPokemons.map((pkm) => pkm.name);
       if (
         waterPokemons.length >= 10 &&
         !icePokemonsNames.includes('articuno') &&
         !cartPokemonsNames.includes('articuno')
       ) {
-        console.log('entró');
         const foundArticuno = Math.floor(Math.random() * 100) < 50;
         if (foundArticuno) {
           getPokemon('articuno');
+        } else {
+          getRandomPokemon();
         }
       } else if (
         firePokemonsNames.length >= 10 &&
@@ -126,6 +134,8 @@ export function Game() {
         const foundMoltres = Math.floor(Math.random() * 100) < 50;
         if (foundMoltres) {
           getPokemon('moltres');
+        } else {
+          getRandomPokemon();
         }
       } else if (
         electricPokemons.length >= 10 &&
@@ -135,13 +145,11 @@ export function Game() {
         const foundZapdos = Math.floor(Math.random() * 100) < 50;
         if (foundZapdos) {
           getPokemon('zapdos');
+        } else {
+          getRandomPokemon();
         }
       } else {
-        const randomIndex = Math.floor(
-          Math.random() * pokemonsInLocation.length
-        );
-        const foundPkmn = pokemonsInLocation[randomIndex];
-        setFoundPokemon(foundPkmn);
+        getRandomPokemon();
       }
     }
   }, [found, pokemonsInLocation, waterPokemons, myPokemonsObj, cartPokemons]);

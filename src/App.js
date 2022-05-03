@@ -44,11 +44,9 @@ function App() {
 
   useEffect(() => {
     const getPokemonsInLocation = async () => {
-      console.log({ selectedLocation });
       const response = await axios.get(
         `/location-area/${selectedLocation.name}`
       );
-      console.log({ response });
 
       const pokemons = response.data.pokemon_encounters;
       const filteredKantoPokemons = pokemons.filter((pkmn) =>
